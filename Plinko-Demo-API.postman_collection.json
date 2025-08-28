@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "plinko-demo-api",
+		"name": "Plinko Demo API",
+		"description": "Collection for testing Plinko game logic API endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Server Seed Hash",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/fair/current",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"fair",
+						"current"
+					]
+				},
+				"description": "Get the current server seed hash for provably fair verification"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Balance",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-user-id",
+						"value": "1",
+						"description": "Mock user authentication"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/demo/balance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"demo",
+						"balance"
+					]
+				},
+				"description": "Get current balance for the authenticated user (starts at 100.00)"
+			},
+			"response": []
+		},
+		{
+			"name": "Test Hard Risk Bust Bins",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-user-id",
+						"value": "1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bet\": 5,\n  \"rows\": 8,\n  \"risk\": \"hard\",\n  \"clientSeed\": \"bust_test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bets/plinko",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bets",
+						"plinko"
+					]
+				},
+				"description": "Test hard risk with potential 0x bust bins (bin 0 or 8 = loss)"
+			},
+			"response": []
+		},
+		{
+			"name": "Place Plinko Bet - Easy Risk",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-user-id",
+						"value": "1",
+						"description": "Mock user authentication"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bet\": 1,\n  \"rows\": 8,\n  \"risk\": \"easy\",\n  \"clientSeed\": \"test123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bets/plinko",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bets",
+						"plinko"
+					]
+				},
+				"description": "Place a Plinko bet with easy risk level (lower volatility)"
+			},
+			"response": []
+		},
+		{
+			"name": "Place Plinko Bet - Medium Risk",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-user-id",
+						"value": "1",
+						"description": "Mock user authentication"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bet\": 2,\n  \"rows\": 8,\n  \"risk\": \"medium\",\n  \"clientSeed\": \"medium123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bets/plinko",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bets",
+						"plinko"
+					]
+				},
+				"description": "Place a Plinko bet with medium risk level (balanced volatility)"
+			},
+			"response": []
+		},
+		{
+			"name": "Place Plinko Bet - Hard Risk",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-user-id",
+						"value": "1",
+						"description": "Mock user authentication"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bet\": 5,\n  \"rows\": 8,\n  \"risk\": \"hard\",\n  \"clientSeed\": \"hard123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bets/plinko",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bets",
+						"plinko"
+					]
+				},
+				"description": "Place a Plinko bet with hard risk level (high volatility, max multiplier 5.6x)"
+			},
+			"response": []
+		},
+		{
+			"name": "Place Bet Without Client Seed",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-user-id",
+						"value": "2",
+						"description": "Different user ID"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bet\": 3,\n  \"rows\": 8,\n  \"risk\": \"medium\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bets/plinko",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bets",
+						"plinko"
+					]
+				},
+				"description": "Place bet without providing clientSeed (system will generate random one)"
+			},
+			"response": []
+		},
+		{
+			"name": "Test Max Bet Limit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-user-id",
+						"value": "1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"bet\": 15,\n  \"rows\": 8,\n  \"risk\": \"easy\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/bets/plinko",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bets",
+						"plinko"
+					]
+				},
+				"description": "Test demo bet limit (should return error for bets > 10)"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
