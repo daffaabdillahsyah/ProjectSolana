@@ -2,10 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { Module } from '@nestjs/common';
 import { BetsController } from './bets.controller';
 import { PlinkoService } from './plinko.service';
+import { PlinkoGateway } from './plinko.gateway';
+import { CrashController } from './crash.controller';
+import { CrashService } from './crash.service';
+import { CrashGateway } from './crash.gateway';
 
 @Module({
-  controllers: [BetsController],
-  providers: [PlinkoService],
+  controllers: [BetsController, CrashController],
+  providers: [PlinkoService, PlinkoGateway, CrashService, CrashGateway],
 })
 class AppModule {}
 
